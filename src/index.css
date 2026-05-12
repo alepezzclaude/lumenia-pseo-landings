@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+@theme {
+  /* === Lumenia OFFICIAL brand palette (from Drive brand kit) === */
+  --color-brand-50:  #FFFBF7;
+  --color-brand-100: #FFEACC;
+  --color-brand-200: #FFDCAA;
+  --color-brand-300: #FFCA80;
+  --color-brand-400: #FFA72B;
+  --color-brand-500: #FF9500;   /* PRIMARY */
+  --color-brand-600: #e88300;
+  --color-brand-700: #c46d00;
+  --color-brand-800: #9b5400;
+  --color-brand-900: #5e3300;
+
+  /* Neutrals aligned to brand off-black #151718 */
+  --color-ink-50:  #F7F7F3;     /* official brand cream */
+  --color-ink-100: #ECECE6;
+  --color-ink-200: #D6D6CE;
+  --color-ink-300: #B4B3A9;
+  --color-ink-400: #8A8980;
+  --color-ink-500: #5F5E55;
+  --color-ink-600: #3D3C36;
+  --color-ink-700: #26251F;
+  --color-ink-800: #1B1B17;     /* fixed - was alpha-bugged */
+  --color-ink-900: #151718;     /* OFFICIAL off-black */
+  --color-ink-950: #0A0B0C;     /* fixed - was alpha-bugged */
+
+  /* Semantic darks */
+  --color-deep: #172b36;
+  --color-deeper: #0f1d24;
+
+  /* === OFFICIAL typefaces from brand kit === */
+  --font-sans: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Caladea", "Work Sans", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+
+  /* Diffused shadow per Taste Bento paradigm */
+  --shadow-diffuse: 0 20px 40px -15px rgba(15, 29, 36, 0.06), 0 4px 12px -6px rgba(15, 29, 36, 0.04);
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.08) inset, 0 12px 32px -16px rgba(15, 29, 36, 0.10);
+
+  /* Radii */
+  --radius-card: 1.5rem;
+  --radius-pill: 999px;
+}
+
+html, body {
+  margin: 0;
+  background: #F7F7F3;
+  color: var(--color-ink-700);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "cv11";
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-ink-900);
+}
+
+/* Grain overlay (fixed, performance-safe) */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23noise)'/></svg>");
+}
+
+/* Marquee */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 28s linear infinite; }
+
+/* Subtle pulse for status dots */
+@keyframes ping-soft {
+  0%   { transform: scale(1); opacity: 0.7; }
+  60%  { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.dot-ping::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: ping-soft 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Typing caret */
+@keyframes blink-caret {
+  0%, 50%   { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.55ch;
+  height: 1em;
+  margin-left: 1px;
+  vertical-align: -0.12em;
+  background: currentColor;
+  animation: blink-caret 1.05s steps(2) infinite;
+}
